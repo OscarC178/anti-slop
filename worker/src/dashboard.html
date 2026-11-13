@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex"><title>Anti-Slop stats</title>
+<style>
+  :root { --bg:#f2f2f7; --card:#fff; --text:#1c1c1e; --sub:#6e6e73; --line:#e5e5ea; --accent:#ff3b30; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#000; --card:#1c1c1e; --text:#f2f2f7; --sub:#98989d; --line:#2c2c2e; } }
+  body { margin:0; background:var(--bg); color:var(--text); font:15px/1.4 -apple-system,system-ui,sans-serif; }
+  main { max-width:760px; margin:0 auto; padding:24px 16px; }
+  h1 { font-size:24px; margin:0 0 16px; }
+  .card { background:var(--card); border-radius:14px; padding:16px; margin-bottom:14px; }
+  .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  .num { font-size:28px; font-weight:700; } .lbl { color:var(--sub); font-size:13px; }
+  table { width:100%; border-collapse:collapse; } td,th { text-align:left; padding:6px 4px; border-bottom:1px solid var(--line); font-variant-numeric:tabular-nums; }
+  th { color:var(--sub); font-weight:500; font-size:13px; } td.r,th.r { text-align:right; }
+  input,button,select { font:inherit; padding:8px 10px; border-radius:10px; border:1px solid var(--line); background:var(--card); color:var(--text); }
+  button { background:var(--accent); color:#fff; border:0; cursor:pointer; }
+  .err { color:var(--accent); } .hidden { display:none; }
+</style></head>
+<body><main>
+  <h1>Anti-Slop stats</h1>
+  <form id="login" class="card">
+    <label>Stats token <input id="token" type="password" autocomplete="current-password" required></label>
+    <button>Open</button> <span id="err" class="err"></span>
+  </form>
+  <section id="out" class="hidden">
+    <div class="card"><label>Period <select id="days"><option>7</option><option selected>30</option><option>90</option><option>365</option></select></label></div>
+    <div class="card stats">
+      <div><div class="num" id="tHidden">0</div><div class="lbl">posts hidden (period)</div></div>
+      <div><div class="num" id="tInstalls">0</div><div class="lbl">new installs (period)</div></div>
+      <div><div class="num" id="tReports">0</div><div class="lbl">installs reporting, latest day</div></div>
+    </div>
+    <div class="card"><table id="bySite"></table></div>
+    <div class="card"><table id="byDay"></table></div>
+  </section>
+</main>
+<script>
+  // The token lives only in this tab's sessionStorage and is sent as a Bearer header.
+  const $ = (id) => document.getElementById(id);
+  const SITES = { x: 'X', linkedin: 'LinkedIn', tiktok: 'TikTok', instagram: 'Instagram' };
+  const KINDS = { signal: 'AI-sounding', label: 'AI label', keyword: 'Keyword' };
+  function getToken() { try { return sessionStorage.getItem('t') || ''; } catch (e) { return ''; } }
+  function setToken(t) { try { sessionStorage.setItem('t', t); } catch (e) {} }
+  function row(cells, head) { const tr = document.createElement('tr'); cells.forEach((c, i) => { const td = document.createElement(head ? 'th' : 'td'); td.textContent = c; if (i) td.className = 'r'; tr.appendChild(td); }); return tr; }
+  async function load() {
+    const r = await fetch('/v1/stats?days=' + $('days').value, { headers: { Authorization: 'Bearer ' + getToken() } });
+    if (r.status === 401) { $('err').textContent = 'Wrong token.'; $('out').classList.add('hidden'); $('login').classList.remove('hidden'); return; }
+    const d = await r.json();
+    $('login').classList.add('hidden'); $('out').classList.remove('hidden');
+    const sum = (a) => a.reduce((s, x) => s + x.n, 0);
+    $('tHidden').textContent = sum(d.hidden).toLocaleString('en-GB');
+    $('tInstalls').textContent = sum(d.installs).toLocaleString('en-GB');
+    $('tReports').textContent = d.reports.length ? d.reports[d.reports.length - 1].n.toLocaleString('en-GB') : '0';
+    const t = $('bySite'); t.innerHTML = '';
+    t.appendChild(row(['Site', ...Object.values(KINDS), 'Total'], true));
+    for (const s of Object.keys(SITES)) {
+      const v = Object.keys(KINDS).map(k => sum(d.hidden.filter(h => h.site === s && h.kind === k)));
+      t.appendChild(row([SITES[s], ...v.map(String), String(v.reduce((a, b) => a + b, 0))]));
+    }
+    const days = [...new Set(d.hidden.map(h => h.day).concat(d.installs.map(i => i.day)))].sort().reverse();
+    const b = $('byDay'); b.innerHTML = '';
+    b.appendChild(row(['Day', 'Hidden', 'Installs', 'Reporting'], true));
+    for (const day of days) {
+      b.appendChild(row([day, String(sum(d.hidden.filter(h => h.day === day))),
+        String((d.installs.find(i => i.day === day) || { n: 0 }).n), String((d.reports.find(i => i.day === day) || { n: 0 }).n)]));
+    }
+  }
+  $('login').addEventListener('submit', (e) => { e.preventDefault(); setToken($('token').value); $('err').textContent = ''; load(); });
+  $('days').addEventListener('change', load);
+  if (getToken()) load();
+</script>
+</body></html>

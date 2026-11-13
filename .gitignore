@@ -1,0 +1,6 @@
+dist/
+node_modules/
+.playwright-cli/
+worker/.wrangler/
+worker/.dev.vars
+.stats-token

@@ -1,0 +1,62 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Instagram fixture</title></head>
+<body>
+<!-- Instagram home feed, mirroring live markup checked on 13 Nov 2026: one <article> per post, no <h1>.
+     Author name is a bold span._aacw; the caption is a regular span._aacu[dir=auto] with the text in an
+     inner span and, when truncated, a "… more" div[role=button] inside the same span.
+     Meta's "AI info" label sits in the header; comments are spans in a list below. -->
+<main role="main">
+
+<article>
+  <div class="hdr"><a href="/dogwalker/"><span class="_ap3a _aaco _aacw" dir="auto">dogwalker</span></a><span>· 2h</span></div>
+  <div class="media"><img alt="a dog"></div>
+  <div><span class="_ap3a _aaco _aacw" dir="auto">dogwalker</span>
+    <span class="_ap3a _aaco _aacu _aacx _aad7 _aade" dir="auto"><div style="display:inline"><span class="_ap3a _aaco _aacu" dir="auto" style="white-space: pre-wrap">first proper frost of the year and she still insisted on the long route round the reservoir</span></div></span></div>
+  <a href="/p/AAA111/">link</a>
+  <ul><li><span dir="auto">Looks like a testament to the ever-evolving landscape — let that sink in 🚀</span></li></ul>
+</article>
+
+<article>
+  <div class="hdr"><a href="/dreamscapes.ai/"><span class="_ap3a _aaco _aacw" dir="auto">dreamscapes.ai</span></a><span>· 4h</span><div role="button">AI info</div></div>
+  <div class="media"><img alt="a neon city"></div>
+  <div><span class="_ap3a _aaco _aacw" dir="auto">dreamscapes.ai</span>
+    <span class="_ap3a _aaco _aacu _aacx _aad7 _aade" dir="auto"><div style="display:inline"><span class="_ap3a _aaco _aacu" dir="auto" style="white-space: pre-wrap">neon city at dusk, which colourway do you prefer?</span></div></span></div>
+  <a href="/p/BBB222/">link</a>
+</article>
+
+<article>
+  <div class="hdr"><a href="/grindset.daily/"><span class="_ap3a _aaco _aacw" dir="auto">grindset.daily</span></a><span>· 5h</span></div>
+  <div class="media"><video></video></div>
+  <div><span class="_ap3a _aaco _aacw" dir="auto">grindset.daily</span>
+    <span class="_ap3a _aaco _aacu _aacx _aad7 _aade" dir="auto"><div style="display:inline"><span class="_ap3a _aaco _aacu" dir="auto" style="white-space: pre-wrap">Here's the thing about discipline. Most people think it's about motivation. It's not. It's about systems.
+
+→ Wake up early
+→ Move your body
+→ Protect your focus
+
+Let that sink in. #mindset #discipline #grindset #motivation #success</span></div></span></div>
+  <a href="/reel/CCC333/">link</a>
+</article>
+
+<article>
+  <div class="hdr"><a href="/longcaption/"><span class="_ap3a _aaco _aacw" dir="auto">longcaption</span></a><span>· 6h</span></div>
+  <div class="media"><img alt="a plate"></div>
+  <div><span class="_ap3a _aaco _aacw" dir="auto">longcaption</span>
+    <span class="_ap3a _aaco _aacu _aacx _aad7 _aade" dir="auto"><div style="display:inline"><span class="_ap3a _aaco _aacu" dir="auto" style="white-space: pre-wrap">Here's the thing about cooking for twelve people in a flat with two hobs: you cannot do it the way the books say. The books assume a kitchen. I have a corridor with a kettle in it. So last night I did the only thing that works, which is to cook everything that can be cooked the day before and</span></div><span>... <div role="button" style="display:inline"><span dir="auto">more</span></div></span></span></div>
+  <a href="/p/DDD444/">link</a>
+</article>
+
+</main>
+<script>
+  // Instagram's "more" reveals the rest of the caption in place and removes the button.
+  document.querySelectorAll('div[role="button"]').forEach(b => {
+    if (!/more$/i.test(b.innerText.trim())) return;
+    b.addEventListener('click', () => {
+      const cap = b.closest('span._aacu').querySelector('div span._aacu');
+      cap.textContent = cap.textContent + " then just reheat it in shifts. It's not glamorous. It's not Instagram. But it fed everyone — and that's the real win. Let that sink in.";
+      b.closest('article').dataset.expanded = '1';
+      b.parentElement.remove();
+    });
+  });
+</script>
+</body></html>

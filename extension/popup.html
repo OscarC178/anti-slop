@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <title>Anti-Slop</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app">
+
+    <header class="top">
+      <div class="brand">
+        <div class="app-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 20 14 10M14 10l3.5-3.5a1.5 1.5 0 0 1 2.1 0l.9.9a1.5 1.5 0 0 1 0 2.1L17 13M4 20c2-5 4-6 8-6l2 2c0 4-1 6-6 8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="title">Anti-Slop</div>
+          <div class="subtitle" id="siteName">Open X, LinkedIn, TikTok or Instagram</div>
+        </div>
+      </div>
+      <label class="switch" title="Master switch">
+        <input type="checkbox" id="enabled">
+        <span class="knob"></span>
+      </label>
+    </header>
+
+    <section class="hero">
+      <div class="hero-num" id="hiddenHere">0</div>
+      <div class="hero-label">redacted on this page</div>
+      <div class="hero-chips">
+        <span class="chip"><b id="scanned">0</b> checked</span>
+        <span class="chip"><b id="hiddenTotal">0</b> all time</span>
+      </div>
+    </section>
+
+    <section class="card review" id="review" hidden aria-live="polite">
+      <button type="button" class="review-x" id="reviewNever" aria-label="Don't ask again">×</button>
+      <div class="review-title">Is your feed cleaner?</div>
+      <div class="row-sub" id="reviewText">Anti-Slop has hidden a lot of posts for you. A quick rating on the Chrome Web Store helps other people find it.</div>
+      <div class="review-actions">
+        <button type="button" class="btn primary" id="reviewRate">Rate Anti-Slop</button>
+        <button type="button" class="btn" id="reviewLater">Not now</button>
+      </div>
+    </section>
+
+    <nav class="segmented" role="tablist" aria-label="View">
+      <button class="seg active" role="tab" data-view="filter" aria-selected="true">Filter</button>
+      <button class="seg" role="tab" data-view="score" aria-selected="false">Scorecard</button>
+      <span class="seg-thumb" aria-hidden="true"></span>
+    </nav>
+
+    <main class="views">
+
+      <!-- ================= FILTER ================= -->
+      <section class="view active" id="view-filter" role="tabpanel">
+
+        <div class="card">
+          <div class="row">
+            <div class="row-text">
+              <div class="row-title">Sensitivity</div>
+              <div class="row-sub" id="thresholdHint">Hide at 3 points</div>
+            </div>
+            <div class="value" id="thresholdOut">3</div>
+          </div>
+          <div class="slider-wrap">
+            <input type="range" id="threshold" min="1" max="10" step="1" value="3" aria-label="Points needed to hide a post">
+            <div class="scale"><span>Strict</span><span>Balanced</span><span>Relaxed</span></div>
+          </div>
+        </div>
+
+        <details class="group" open>
+          <summary><span>Behaviour</span><svg class="chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <div class="card list">
+            <label class="row">
+              <div class="row-text"><div class="row-title">Platform AI labels</div><div class="row-sub">"Made with AI", "AI-generated", #aiart…</div></div>
+              <span class="switch sm"><input type="checkbox" id="labels"><span class="knob"></span></span>
+            </label>
+            <label class="row">
+              <div class="row-text"><div class="row-title">Peek behind "Show more"</div><div class="row-sub">Expands borderline posts to read the rest</div></div>
+              <span class="switch sm"><input type="checkbox" id="peek"><span class="knob"></span></span>
+            </label>
+            <div class="row">
+              <div class="row-text"><div class="row-title">When hiding</div></div>
+              <div class="mini-seg" id="modeSeg">
+                <button data-mode="collapse" class="active">Collapse</button>
+                <button data-mode="remove">Remove</button>
+              </div>
+            </div>
+            <label class="row">
+              <div class="row-text"><div class="row-title">Share anonymous counts</div><div class="row-sub">Daily totals of hidden posts only. <a href="#" id="whatSent">What's sent?</a></div></div>
+              <span class="switch sm"><input type="checkbox" id="telemetry"><span class="knob"></span></span>
+            </label>
+            <div class="row">
+              <div class="row-text"><div class="row-title">Sites</div></div>
+              <div class="pills">
+                <label class="pill"><input type="checkbox" id="site-x"><span>X</span></label>
+                <label class="pill"><input type="checkbox" id="site-linkedin"><span>LinkedIn</span></label>
+                <label class="pill"><input type="checkbox" id="site-tiktok"><span>TikTok</span></label>
+                <label class="pill"><input type="checkbox" id="site-instagram"><span>Instagram</span></label>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="group">
+          <summary><span>Keywords</span><span class="count" id="keywordCount"></span><svg class="chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <div class="card">
+            <div class="row-sub pad">Hide any post whose text or author matches one of these. Not case-sensitive.</div>
+            <form class="kw-form" id="kwForm">
+              <input type="text" id="kwInput" placeholder="Add a word or phrase" autocomplete="off" maxlength="60">
+              <button type="submit" class="add" aria-label="Add keyword">+</button>
+            </form>
+            <div class="chips" id="keywords"></div>
+          </div>
+        </details>
+
+        <details class="group">
+          <summary><span>Signals</span><span class="count" id="signalCount"></span><svg class="chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <div id="signals"></div>
+        </details>
+
+        <details class="group">
+          <summary><span>Recently hidden here</span><svg class="chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <div class="card list" id="recent"><div class="empty">Nothing hidden on this page yet.</div></div>
+        </details>
+
+      </section>
+
+      <!-- ================= SCORECARD ================= -->
+      <section class="view" id="view-score" role="tabpanel" hidden>
+
+        <nav class="segmented small" id="rangeSeg" role="radiogroup" aria-label="Time frame">
+          <button class="seg active" data-range="today">Today</button>
+          <button class="seg" data-range="7">7 days</button>
+          <button class="seg" data-range="30">30 days</button>
+          <button class="seg" data-range="all">All</button>
+          <span class="seg-thumb" aria-hidden="true"></span>
+        </nav>
+
+        <div class="stats">
+          <div class="stat"><div class="stat-num" id="scTotal">0</div><div class="stat-label">posts redacted</div></div>
+          <div class="stat"><div class="stat-num" id="scRate">0</div><div class="stat-label">per minute of feed</div></div>
+          <div class="stat"><div class="stat-num" id="scMinutes">0</div><div class="stat-label">feed minutes</div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">By site</div>
+          <div class="bars" id="scSites"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">By reason</div>
+          <div class="bars" id="scKinds"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Last 7 days</div>
+          <div class="days" id="scDays"></div>
+        </div>
+
+        <div class="footnote">Feed minutes count time a feed tab is visible. This scorecard stays on your device.</div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- First-run notice: what telemetry sends, with a clear opt-out. Shown once; reopened by "What's sent?". -->
+  <div class="sheet-backdrop" id="notice" hidden>
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="noticeTitle">
+      <div class="sheet-grabber" aria-hidden="true"></div>
+      <h2 id="noticeTitle">Before you start</h2>
+      <p>Anti-Slop does all its work on your device. To check it is working, it sends us <b>one small daily total</b>: how many posts it hid, on which site, and why.</p>
+      <div class="example">
+        <div class="example-label">This is everything we receive</div>
+        <div class="example-row"><span>12 Nov</span><span>LinkedIn</span><span>AI-sounding</span><b>14 hidden</b></div>
+      </div>
+      <div class="never">
+        <div class="example-label">We never receive</div>
+        <ul>
+          <li>The posts, their text or who wrote them</li>
+          <li>The pages or profiles you visit</li>
+          <li>Your name, your accounts or any ID that links the numbers to you</li>
+        </ul>
+      </div>
+      <p class="why"><b>Why we ask:</b> the totals show which sites have the most slop and warn us when a site changes and the filter stops working.</p>
+      <label class="optout"><input type="checkbox" id="noticeOptOut"><span>Don't share my counts</span></label>
+      <button type="button" class="btn primary wide" id="noticeOk">Continue</button>
+      <div class="sheet-foot">Change this any time under Behaviour. <a href="#" id="privacyLink">Privacy policy</a></div>
+    </div>
+  </div>
+
+  <script src="signals.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

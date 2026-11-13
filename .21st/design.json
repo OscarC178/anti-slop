@@ -1,0 +1,14 @@
+{
+  "project": "anti-slop",
+  "framework": "vanilla HTML/CSS/JS (browser extension popup, no build step)",
+  "direction": "iOS grouped-inset settings sheet; Filter / Scorecard segmented views",
+  "decisions": [
+    { "date": "2026-11-13", "choice": "Hand-built vanilla UI; 21st components are React so they serve as references only" },
+    { "date": "2026-11-13", "choice": "Segmented thumb uses the Halaska 'emphasized' curve cubic-bezier(0.2,0,0,1); chips/knobs use the spring curve cubic-bezier(0.34,1.56,0.64,1)", "ref": "21st component 34763" },
+    { "date": "2026-11-13", "choice": "Switch knob stretches on press (coss.com switch pattern)", "ref": "21st component 11654" },
+    { "date": "2026-11-13", "choice": "Stat cells share one card split by hairlines (chatcn StatCardGroup)", "ref": "21st component 45564" },
+    { "date": "2026-11-13", "choice": "Keyword chips spring in, 180ms exit; duplicates rejected case-insensitively", "ref": "21st component 23567" },
+    { "date": "2026-11-13", "choice": "Collapsible groups animate height via ::details-content + interpolate-size", "ref": "21st component 973" },
+    { "date": "2026-11-13", "choice": "Day columns highlight on hover, value shown on hover and for today", "ref": "21st component 34510" }
+  ]
+}

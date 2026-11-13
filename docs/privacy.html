@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anti-Slop privacy policy</title>
+<meta name="description" content="What the Anti-Slop browser extension shares, what it never shares, and how to turn sharing off.">
+<link rel="icon" href="img/icon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><a class="brand" href="./"><img src="img/icon.png" alt="" width="28" height="28">Anti-Slop</a></header>
+<main class="prose">
+  <h1>Privacy policy</h1>
+  <p class="muted">Last updated 13 November 2026. Applies to the Anti-Slop extension for Chrome and Chromium, version 0.2.0 and later.</p>
+
+  <h2>Who we are</h2>
+  <p>Anti-Slop is an open-source extension made by an independent developer, published on GitHub as <a href="https://github.com/OscarC178">OscarC178</a>. "We" in this policy means that developer.</p>
+
+  <h2>The short version</h2>
+  <p>Anti-Slop reads posts on X, LinkedIn, TikTok and Instagram <b>inside your browser</b> to decide what to hide. No post, link, name or account ever leaves your device. The only thing it shares is a daily total of how many posts it hid, and you can turn that off.</p>
+
+  <h2>What stays on your device</h2>
+  <ul>
+    <li>The text and labels of the posts it checks. They are read in the page and never stored or sent.</li>
+    <li>Your settings: sensitivity, signals, keywords and sites. These are kept by Chrome's storage, and synced between your own browsers if you have Chrome sync turned on.</li>
+    <li>Your scorecard: a local log of when a post was hidden, on which site, for which reason and with what score, plus how many minutes a feed tab was open. It holds no post text and never leaves your device.</li>
+  </ul>
+
+  <h2>What is shared: anonymous daily totals</h2>
+  <p>Unless you opt out, once a day Anti-Slop sends the previous day's totals to our counter. One message looks like this, and this is all of it:</p>
+  <pre>{"v":1, "type":"counts", "ext":"0.2.0", "day":"2026-11-12",
+ "counts":[{"site":"linkedin", "kind":"signal", "n":14}, {"site":"x", "kind":"label", "n":2}]}</pre>
+  <p>That is the extension version, the date, and the number of posts hidden per site and per reason (AI-sounding, AI label or keyword). When the extension is first installed it also sends one message saying that version <code>0.2.0</code> was installed.</p>
+  <p>There is no user ID, install ID, cookie or fingerprint, so totals from different days cannot be linked to each other or to you. The counter refuses any message with extra fields.</p>
+
+  <h2>Why</h2>
+  <p>The totals show which sites have the most slop and warn us quickly when a site changes its layout and the filter stops working there.</p>
+
+  <h2>Where it goes and how long it is kept</h2>
+  <p>The totals are sent to a small Cloudflare Worker and added to a Cloudflare D1 database as running sums per day, site and reason. They are kept for as long as the project runs. Because they cannot be traced to a person, there is nothing to look up or delete for any one user.</p>
+  <p>As with any web request, Cloudflare receives your IP address to deliver the message. It is used for about a minute to rate-limit abuse and is not written to the database. See <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare's privacy policy</a>.</p>
+
+  <h2>Who else receives data</h2>
+  <p>Only Cloudflare, Inc., which hosts the counter and stores the daily totals on our behalf. Nobody else receives anything from Anti-Slop. We do not use analytics, advertising or tracking services, in the extension or on this website.</p>
+
+  <h2>Turning it off</h2>
+  <p>The first time you open Anti-Slop, a screen explains this and offers a <b>Don't share my counts</b> tick box. You can change your choice at any time in the popup under <b>Behaviour → Share anonymous counts</b>. Turning it off stops all sending and deletes any totals not yet sent.</p>
+
+  <h2>What we never do</h2>
+  <ul>
+    <li>Sell or pass on data to anyone, including advertisers or data brokers.</li>
+    <li>Use data for advertising, credit checks or anything unrelated to filtering your feed.</li>
+    <li>Call an AI model or send your posts anywhere.</li>
+  </ul>
+  <p>The use of information received by Anti-Slop adheres to the <a href="https://developer.chrome.com/docs/webstore/program-policies/policies">Chrome Web Store User Data Policy</a>, including the <a href="https://developer.chrome.com/docs/webstore/program-policies/limited-use">Limited Use requirements</a>.</p>
+
+  <h2>Permissions</h2>
+  <ul>
+    <li><b>Access to x.com, twitter.com, linkedin.com, tiktok.com and instagram.com</b>: to read posts and hide the ones that match. It runs on no other sites.</li>
+    <li><b>Storage</b>: settings and the local scorecard.</li>
+    <li><b>Alarms</b>: to send the daily total a few times a day at most.</li>
+    <li><b>Web navigation</b>: to reset the toolbar count when you change page.</li>
+  </ul>
+
+  <h2>Children</h2>
+  <p>Anti-Slop is not aimed at children and collects nothing that could identify anyone, of any age.</p>
+
+  <h2>Changes and contact</h2>
+  <p>If this policy changes, the new version will appear here with a new date, and any change to what is shared will be shown in the extension before it takes effect. Questions: <a href="https://github.com/OscarC178/anti-slop/issues">open an issue on GitHub</a>. The code, including the counter, is public at <a href="https://github.com/OscarC178/anti-slop">github.com/OscarC178/anti-slop</a>.</p>
+</main>
+<footer class="foot"><a href="./">Home</a> · <a href="https://github.com/OscarC178/anti-slop">Source</a></footer>
+</body>
+</html>

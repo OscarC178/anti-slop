@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anti-Slop</title>
+<meta name="description" content="AI has its uses. Slop is not one of them. A free browser extension that hides AI-labelled and AI-sounding posts on X, LinkedIn, TikTok and Instagram.">
+<meta property="og:title" content="Anti-Slop: slop is slop">
+<meta property="og:description" content="Hides AI-labelled and AI-sounding posts on X, LinkedIn, TikTok and Instagram. Runs on your device.">
+<meta property="og:image" content="https://oscarc178.github.io/anti-slop/img/screenshot-1.png">
+<link rel="icon" href="img/icon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="./"><img src="img/icon.png" alt="" width="28" height="28">Anti-Slop</a>
+  <nav><a class="wide-only" href="#how">How it works</a><a href="privacy.html">Privacy</a><a href="https://github.com/OscarC178/anti-slop">Source</a></nav>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>Slop is slop.</h1>
+    <p>AI has its uses. Filling your feed with posts nobody really wrote is not one of them. Anti-Slop hides them on X, LinkedIn, TikTok and Instagram, so you see what people actually have to say.</p>
+    <div class="cta">
+      <!-- STORE_URL: replace href, text and remove aria-disabled once the Chrome Web Store listing is live. -->
+      <a class="btn primary" id="install" href="https://github.com/OscarC178/anti-slop#install" aria-disabled="true">Chrome Web Store: coming soon</a>
+      <a class="btn ghost" href="https://github.com/OscarC178/anti-slop">Source code</a>
+    </div>
+    <div class="note">Free. Works in Chrome, Edge, Brave and other Chromium browsers.</div>
+  </section>
+
+  <img class="shot" src="img/screenshot-1.png" width="1280" height="800" alt="A feed where three AI-sounding posts are folded into one-line notes, next to the Anti-Slop popup showing 3 hidden on this page.">
+
+  <section id="how">
+    <h2>How it works</h2>
+    <div class="grid">
+      <div class="card"><h3>AI labels</h3><p>If the platform or the poster marks it as AI ("Made with AI", "AI info", #aiart), it goes.</p></div>
+      <div class="card"><h3>AI writing</h3><p>22 tell-tale patterns, such as "it's not X, it's Y", emoji bullet lists and "let that sink in". Enough of them and the post is hidden.</p></div>
+      <div class="card"><h3>Your words</h3><p>Add any word or phrase you're sick of. Posts that use it are hidden too.</p></div>
+    </div>
+  </section>
+
+  <section class="split">
+    <div>
+      <h2>You stay in charge</h2>
+      <p>Each hidden post leaves a one-line note saying why. Click <b>Show</b> to read it anyway.</p>
+      <p>Set how strict it is, switch off any signal, or turn it off for a site. It reads writing, not minds, so it won't be perfect.</p>
+    </div>
+    <img src="img/screenshot-2.png" width="1280" height="800" alt="Hidden posts with their reasons, such as 'reads like AI slop (9 pts)' and 'labelled AI content', each with a Show button." loading="lazy">
+  </section>
+
+  <section class="privacy" id="privacy">
+    <h2>Your feed stays yours</h2>
+    <ul>
+      <li>Every post is checked inside your browser. No post, link, name or account leaves your device.</li>
+      <li>No AI model is called. Nothing costs anything.</li>
+      <li>The only thing shared is a daily count of hidden posts, like <code>LinkedIn · AI-sounding · 14</code>. There's no ID, and one tick turns it off.</li>
+    </ul>
+    <p><a href="privacy.html">Privacy policy</a></p>
+  </section>
+</main>
+
+<footer class="foot">Anti-Slop is open source and not affiliated with X, LinkedIn, TikTok, Instagram or Meta. · <a href="privacy.html">Privacy</a> · <a href="https://github.com/OscarC178/anti-slop/issues">Report a problem</a></footer>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>X fixture</title></head>
+<body>
+<main>
+<div data-testid="cellInnerDiv"><article data-testid="tweet">
+  <div class="user">Sam Human · 2h</div>
+  <div data-testid="tweetText" style="white-space: pre-wrap">just missed the train again. third time this week lol. anyone know if the 8:14 is ever actually on time?</div>
+  <a href="/samhuman/status/1001">link</a>
+</article></div>
+
+<div data-testid="cellInnerDiv"><article data-testid="tweet">
+  <div class="user">Growth Guru · 4h</div>
+  <div data-testid="tweetText" style="white-space: pre-wrap">Most people think productivity is about doing more. It's not. It's about doing less — but better.
+
+Here's what nobody tells you:
+
+→ Your calendar is a trap
+→ Meetings are the enemy of deep work
+→ Saying no is a superpower
+
+Let that sink in.</div>
+  <a href="/growthguru/status/1002">link</a>
+</article></div>
+
+<div data-testid="cellInnerDiv"><article data-testid="tweet">
+  <div class="user">Photo Person · 5h</div>
+  <div data-testid="tweetText" style="white-space: pre-wrap">sunset over the bay tonight, no filter needed honestly, the colours were unreal</div>
+  <div class="label">Made with AI</div>
+  <a href="/photoperson/status/1003">link</a>
+</article></div>
+
+<div data-testid="cellInnerDiv"><article data-testid="tweet">
+  <div class="user">Dev Dan · 6h</div>
+  <div data-testid="tweetText" style="white-space: pre-wrap">Does anyone know whether the Asahi kernel supports the Thunderbolt dock properly yet? Mine shows up in lsusb but the ethernet port never gets an address. Tried two docks, same result.</div>
+  <a href="/devdan/status/1004">link</a>
+</article></div>
+</main>
+<script>
+  // Simulate the infinite-scroll feed adding a post later.
+  setTimeout(() => {
+    const d = document.createElement('div');
+    d.setAttribute('data-testid', 'cellInnerDiv');
+    d.innerHTML = '<article data-testid="tweet"><div class="user">Late Slop · 1m</div>' +
+      '<div data-testid="tweetText" style="white-space: pre-wrap">Thrilled to share a pivotal milestone, underscoring our commitment to innovation. This isn\'t just a launch, it\'s a testament to what\'s possible. We\'re leveraging cutting-edge technology to unlock seamless experiences, ensuring customers stay ahead in today\'s fast-paced landscape.</div>' +
+      '<a href="/lateslop/status/1005">link</a></article>';
+    document.querySelector('main').appendChild(d);
+  }, 400);
+</script>
+</body></html>

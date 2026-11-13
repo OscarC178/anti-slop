@@ -1,0 +1,49 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>X show-more fixture</title></head>
+<body>
+<main>
+<!-- Long posts on X are cut at 280 characters; "Show more" expands them in place.
+     Post A: harmless preview, slop after the cut (preview scores 1 → peeked → hidden).
+     Post B: human preview and human remainder (preview scores 1 → peeked → stays visible).
+     Post C: preview scores 0 → never peeked, button untouched. -->
+<div data-testid="cellInnerDiv"><article data-testid="tweet">
+  <div class="user">Long Slop · 1h</div>
+  <div data-testid="tweetText" style="white-space: pre-wrap">Here's the thing about building a company in 2026. Most founders I meet are obsessed with the wrong metrics, chasing vanity numbers that look good on a slide but tell you nothing about whether the business actually works. I spent three years learning this the hard way.</div>
+  <button data-testid="tweet-text-show-more-link">Show more</button>
+  <a href="/longslop/status/2001">link</a>
+</article></div>
+
+<div data-testid="cellInnerDiv"><article data-testid="tweet">
+  <div class="user">Long Human · 2h</div>
+  <div data-testid="tweetText" style="white-space: pre-wrap">Spent the weekend rebuilding the shed roof – the old felt had gone completely and the rain was getting into the mower. Took about six hours including a trip to the merchants because I bought the wrong width of batten, which is the kind of thing I do every single time.</div>
+  <button data-testid="tweet-text-show-more-link">Show more</button>
+  <a href="/longhuman/status/2002">link</a>
+</article></div>
+
+<div data-testid="cellInnerDiv"><article data-testid="tweet">
+  <div class="user">Quiet Human · 3h</div>
+  <div data-testid="tweetText" style="white-space: pre-wrap">The 8:14 was cancelled again so I walked in along the canal, which honestly was nicer than the train anyway. Saw two herons and a kingfisher near the lock. Might just do this every day now the mornings are lighter, at least until it starts raining properly again in November.</div>
+  <button data-testid="tweet-text-show-more-link">Show more</button>
+  <a href="/quiethuman/status/2003">link</a>
+</article></div>
+</main>
+<script>
+  // Simulate X: pressing "Show more" swaps in the full text and removes the button.
+  const FULL = {
+    '2001': document.querySelector('a[href*="2001"]').closest('article').querySelector('[data-testid="tweetText"]').textContent +
+      "\n\nIt's not about revenue. It's about retention.\n\n→ Ship weekly\n→ Talk to users\n→ Cut scope\n\nThat's the real win.\n\nLet that sink in.",
+    '2002': document.querySelector('a[href*="2002"]').closest('article').querySelector('[data-testid="tweetText"]').textContent +
+      " Anyway it's watertight now and the mower has dried out, so the garden might get cut before Christmas after all.",
+    '2003': document.querySelector('a[href*="2003"]').closest('article').querySelector('[data-testid="tweetText"]').textContent + ' Bonus: no delays.',
+  };
+  document.querySelectorAll('[data-testid="tweet-text-show-more-link"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const art = btn.closest('article');
+      const id = art.querySelector('a[href*="/status/"]').getAttribute('href').split('/').pop();
+      art.dataset.expanded = '1';
+      art.querySelector('[data-testid="tweetText"]').textContent = FULL[id];
+      btn.remove();
+    });
+  });
+</script>
+</body></html>

@@ -1,0 +1,23 @@
+# Anti-Slop telemetry Worker. Deploy steps are in README.md in this folder.
+name = "anti-slop-telemetry"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+workers_dev = true
+
+# Bundle the dashboard page as a string.
+rules = [{ type = "Text", globs = ["**/*.html"], fallthrough = true }]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "anti-slop-telemetry"
+database_id = "3d5c961f-4c41-4604-8411-0e23aafe5fa1"
+
+# 10 requests per IP per minute. A real install makes one or two a day.
+[[ratelimits]]
+name = "LIMITER"
+namespace_id = "1001"
+  [ratelimits.simple]
+  limit = 10
+  period = 60
+
+# STATS_TOKEN is a secret: set it with `wrangler secret put STATS_TOKEN`, never in this file.

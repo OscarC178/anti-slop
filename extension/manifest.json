@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Anti-Slop: hide AI slop from your feed",
+  "short_name": "Anti-Slop",
+  "version": "0.2.0",
+  "description": "Hides AI-labelled and AI-sounding posts on X, LinkedIn, TikTok and Instagram. Runs on your device, no AI calls.",
+  "permissions": ["storage", "webNavigation", "alarms"],
+  "host_permissions": [],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Anti-Slop",
+    "default_icon": { "16": "icons/16.png", "48": "icons/48.png", "128": "icons/128.png" }
+  },
+  "icons": { "16": "icons/16.png", "48": "icons/48.png", "128": "icons/128.png" },
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://x.com/*", "https://*.x.com/*",
+        "https://twitter.com/*", "https://*.twitter.com/*",
+        "https://www.linkedin.com/*", "https://linkedin.com/*",
+        "https://www.tiktok.com/*", "https://tiktok.com/*",
+        "https://www.instagram.com/*", "https://instagram.com/*"
+      ],
+      "js": ["signals.js", "sites.js", "content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}
