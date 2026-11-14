@@ -1,0 +1,43 @@
+I built Anti-Slop because my LinkedIn feed had turned into the same post written forty times a day. Someone was humbled to announce something. A lesson about leadership arrived in one-line paragraphs with a list of ticks underneath and a question at the end asking whether I agreed. X wasn't much better, and Instagram captions had started going the same way. AI is handy for plenty of things. Filling a feed with posts nobody really wrote isn't one of them.
+
+So this extension hides those posts. It works on X, LinkedIn, TikTok and Instagram. Everything happens inside your own browser.
+
+How it decides what to hide
+
+It looks at two things. The first is labels. If the platform has marked a post as AI-made (X's "Made with AI", TikTok's AI-generated tag, Instagram's "AI info", content credentials on LinkedIn), or the poster has tagged it #aiart or said it was generated with a particular tool, the post goes. You can switch this off if you'd rather see labelled posts.
+
+The second is the writing itself. I collected 22 habits that turn up again and again in machine-written posts, mostly from Wikipedia's guide to spotting AI writing and from people who study this properly. They include the contrast trick where something is described by what it isn't, emoji used as bullet points, chatbot leftovers such as a placeholder for your name that nobody filled in, stacks of hashtags, dramatic closing lines, and that particular vocabulary everyone now recognises. Each habit is worth a point or two. When a post adds up to enough points, it's hidden. A single dash or one long word won't do it on its own, and posts under eight words are never scored at all.
+
+You can also add your own words. If you're tired of a topic, a phrase or a buzzword, type it in and any post that uses it will be hidden as well.
+
+What you see instead
+
+By default a hidden post shrinks to a thin grey bar showing its score and the habits it tripped. There's a Show button on every one, so if you're curious, or you think it got one wrong, the post is a click away. Switch to Remove if you'd prefer to see nothing at all. The posts then disappear from the feed completely.
+
+For long posts that are cut off behind a "see more" link, Anti-Slop will open them up when the visible part already looks suspicious, so it can judge the whole thing instead of the first two lines.
+
+Setting it up the way you like
+
+There's a slider for how strict it is. At the strict end almost any post with emoji bullets will go. At the relaxed end only the really obvious stuff gets caught. I keep mine at 3 because that suits LinkedIn and X well. Every one of the 22 habits can be turned on or off, each site can be switched off separately, and there's a master switch at the top for when you want your feed back exactly as it was.
+
+The scorecard
+
+The toolbar badge shows how many posts were hidden on the page you're looking at. Open the popup and the Scorecard tab shows how many have gone today, this week, this month and since you installed it, split by site and by reason, along with how many slop posts you run into per minute of scrolling. I find that last number either reassuring or depressing, depending on the day.
+
+Privacy
+
+Anti-Slop reads posts so that it can judge them, and that happens on your computer. Nothing from your feed is ever sent anywhere. That includes the posts themselves along with any links and names in them. No AI model is involved at any point. That also means it costs nothing to run and works the moment a post appears.
+
+The one thing it does share is a small daily count of how many posts it hid, broken down by site and reason, such as LinkedIn, AI-sounding, 14. There's no ID attached. Those numbers can't be tied to you or to each other. They tell me which sites are worst. More usefully, they warn me when a site has changed its pages so much that the filter has quietly stopped working there. The first time you open Anti-Slop it explains this and gives you a box to tick if you'd rather not share. You can change your mind whenever you like under Behaviour. The full privacy policy is at https://oscarc178.github.io/anti-slop/privacy.html
+
+Being honest about its limits
+
+It reads writing, it can't read minds. Some people write in exactly the style it looks for, and some of them will be hidden by mistake. Some AI posts are written carefully enough to get through. That's why every hidden post can be shown again and why the strictness is yours to set. Videos and images with no caption can only be caught if the platform has labelled them.
+
+Sites change their pages often. When that happens a site might stop being filtered for a little while until I update it. If you spot that, please open an issue on GitHub.
+
+Open source
+
+All the code is public at https://github.com/OscarC178/anti-slop including the list of habits it checks for, the sources behind each one, and the small counter that receives the daily totals. If you think a signal is unfair, or you've noticed a new habit that should be on the list, I'd like to hear about it.
+
+Anti-Slop is an independent project. It has no connection with the companies behind any of these sites.

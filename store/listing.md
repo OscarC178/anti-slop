@@ -20,40 +20,9 @@ Hides AI-labelled and AI-sounding posts on X, LinkedIn, TikTok and Instagram. Ru
 **Category**: Social Networking
 **Language**: English (United Kingdom)
 
-**Description**
-```
-AI has its uses. Filling your feed with posts nobody really wrote is not one of them.
-
-Anti-Slop folds away posts that read like they were written by AI, and posts the platform itself has labelled as AI-made, on X, LinkedIn, TikTok and Instagram.
-
-HOW IT DECIDES
-• Platform labels: posts marked "Made with AI", "AI-generated", "AI info", content credentials, or tagged #aiart and similar.
-• Writing signals: 22 patterns that are common in AI-written posts, such as "it's not X, it's Y" contrasts, stacked emoji bullets, "let that sink in" closers and chatbot left-overs like "[Your Name]". Each signal adds points. When a post reaches your threshold, it is hidden.
-• Your keywords: add any word or phrase and posts containing it are hidden too.
-
-YOU STAY IN CONTROL
-• A sensitivity slider from strict to relaxed.
-• Switch any of the 22 signals on or off.
-• Collapse hidden posts to a one-line note with a Show button, or remove them completely.
-• Turn it off per site, or all at once.
-
-SEE WHAT IT DID
-• Every hidden post says why it was hidden.
-• A scorecard shows how much was hidden today, this week and all time, by site and by reason.
-
-PRIVATE BY DESIGN
-• Filtering runs entirely in your browser. No AI model is called and no post is ever sent anywhere.
-• Anti-Slop shares one thing: a daily total of how many posts it hid, per site and reason (for example "LinkedIn, AI-sounding, 14"). No post text, no links, no account names, no ID.
-• You are told this the first time you open it, and one tick turns it off. You can change it any time.
-
-GOOD TO KNOW
-• It reads writing, not minds. Some human posts will look like AI and some AI posts will slip through. Use the slider and the Show button to suit your feed.
-• Videos and images without a caption can only be caught by a platform label.
-• Not affiliated with X, LinkedIn, TikTok, Instagram or Meta.
-
-Open source: https://github.com/OscarC178/anti-slop
-Privacy policy: https://oscarc178.github.io/anti-slop/privacy.html
-```
+**Description**: paste the whole of `store/description.txt` (about 5,100 of the 16,000 characters).
+It scores 0 points on Anti-Slop's own detector with all 22 signals on. Check it again after any edit:
+`node -e "const S=require('./extension/signals.js');console.log(S.score(require('fs').readFileSync('store/description.txt','utf8')))"`
 
 **Graphics** (all in `store/assets/`, made by `node tools/make-store-assets.js`)
 | Field | File | Size |
