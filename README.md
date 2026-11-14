@@ -112,7 +112,6 @@ tests/
                         slider sweep, Show button, modes, per-site and per-signal switches (node tests/e2e.js)
   fixtures/             fake X (plus a "Show more" variant), LinkedIn (classic and 2026 markup), TikTok and Instagram pages
 tools/make-store-assets.js  icons, store screenshots and promo tiles
-tools/make-icons.js         old icon generator, superseded (do not run)
 tools/package.sh            tests + upload zip
 store/                      listing copy, demo feed, generated assets
 docs/                       GitHub Pages site and privacy policy
