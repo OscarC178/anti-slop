@@ -16,14 +16,14 @@ const EXT = path.join(ROOT, 'extension');
 const OUT = path.join(ROOT, 'store', 'assets');
 fs.mkdirSync(OUT, { recursive: true });
 
-// Same brush mark as the popup header.
-const MARK = '<path d="M4 20 14 10M14 10l3.5-3.5a1.5 1.5 0 0 1 2.1 0l.9.9a1.5 1.5 0 0 1 0 2.1L17 13M4 20c2-5 4-6 8-6l2 2c0 4-1 6-6 8" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>';
+// Same mark as the popup header: a filter funnel catching two AI sparkles.
+const MARK = '<path d="M6.5 2C7.16 4.34 7.16 4.34 9.5 5C7.16 5.66 7.16 5.66 6.5 8C5.84 5.66 5.84 5.66 3.5 5C5.84 4.34 5.84 4.34 6.5 2Z" fill="#fff"/><path d="M15.5 1.7999999999999998C15.984 3.516 15.984 3.516 17.7 4C15.984 4.484 15.984 4.484 15.5 6.2C15.016 4.484 15.016 4.484 13.3 4C15.016 3.516 15.016 3.516 15.5 1.7999999999999998Z" fill="#fff"/><path d="M3 10h18l-7 7v4.5l-4-2V17z" fill="#fff" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/>';
 function iconSvg(size, art) {
   const pad = (size - art) / 2, r = art * 0.225;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
     <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff6b5e"/><stop offset="1" stop-color="#e5302a"/></linearGradient></defs>
     <rect x="${pad}" y="${pad}" width="${art}" height="${art}" rx="${r}" fill="url(#g)"/>
-    <g transform="translate(${pad + art * 0.17} ${pad + art * 0.17}) scale(${art * 0.66 / 24})">${MARK}</g></svg>`;
+    <g transform="translate(${pad + art * 0.14} ${pad + art * 0.14}) scale(${art * 0.72 / 24})">${MARK}</g></svg>`;
 }
 const b64 = (file) => 'data:image/png;base64,' + fs.readFileSync(file).toString('base64');
 
