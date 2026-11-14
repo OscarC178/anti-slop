@@ -20,7 +20,7 @@ Hides AI-labelled and AI-sounding posts on X, LinkedIn, TikTok and Instagram. Ru
 **Category**: Social Networking
 **Language**: English (United Kingdom)
 
-**Description**: paste the whole of `store/description.txt` (about 5,100 of the 16,000 characters).
+**Description**: paste the whole of `store/description.txt` (about 2,200 of the 16,000 characters).
 It scores 0 points on Anti-Slop's own detector with all 22 signals on. Check it again after any edit:
 `node -e "const S=require('./extension/signals.js');console.log(S.score(require('fs').readFileSync('store/description.txt','utf8')))"`
 
