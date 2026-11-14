@@ -15,3 +15,6 @@ More: https://www.oscraven.com/anti-slop?utm_source=youtube&utm_medium=video&utm
 Source: https://github.com/OscarC178/anti-slop
 
 Settings: Visibility Unlisted · Not made for kids · No altered or synthetic content of real people · Category Science & Technology · Thumbnail docs/img/poster.jpg
+
+Published 2026-11-14 as Unlisted: https://youtu.be/63VOTi3ck0A
+Custom thumbnail did not attach (channel likely needs phone verification at https://www.youtube.com/verify); auto frame used.
