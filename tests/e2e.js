@@ -37,6 +37,7 @@ function check(cond, msg) {
     'https://www.tiktok.com/feed': 'tiktok.html',
     'https://x.com/more': 'x-more.html',                             // long posts behind "Show more"
     'https://www.instagram.com/': 'instagram.html',
+    'https://www.instagram.com/reels/RRR111/': 'instagram-reels.html', // Reels viewer, live markup 2026-11-14
   };
   await context.route('**/*', (route) => {
     const u = route.request().url();
@@ -145,6 +146,26 @@ function check(cond, msg) {
   check(igBy['/p/DDD444/'].expanded && igBy['/p/DDD444/'].hidden, 'borderline long caption: text "more" button pressed, full text hidden');
   check(await badge(ig) === '3', `badge shows 3 (got ${await badge(ig)})`);
 
+  console.log('\nInstagram Reels (4 reels, no <article>: human caption, slop caption, "AI info" label, no caption)');
+  const REEL = 'main div[aria-busy] > div:has(video)';
+  const igr = await context.newPage();
+  await igr.goto('https://www.instagram.com/reels/RRR111/');
+  await igr.waitForTimeout(1200);
+  const reels = await igr.evaluate((sel) => Array.from(document.querySelectorAll(sel)).map(r => ({
+    id: r.querySelector('a[href*="/reel/"]').getAttribute('href'),
+    key: r.dataset.antislopKey || '',
+    hidden: r.classList.contains('antislop-hidden'),
+    why: r.querySelector('.antislop-placeholder')?.innerText.replace(/\s+/g, ' ').slice(0, 60) || '',
+  })), REEL);
+  const rBy = Object.fromEntries(reels.map(p => [p.id, p]));
+  check(await processed(igr) === 4, `4 reels recognised without <article> (got ${await processed(igr)})`);
+  check(reels.every(r => r.key.startsWith('/reel/')), 'each reel keyed by its own /reel/ link');
+  check(!rBy['/reel/RRR111/'].hidden, 'human reel caption stays visible');
+  check(rBy['/reel/RRR222/'].hidden && /slop/.test(rBy['/reel/RRR222/'].why), `slop reel caption hidden (${rBy['/reel/RRR222/'].why})`);
+  check(rBy['/reel/RRR333/'].hidden && /labelled/.test(rBy['/reel/RRR333/'].why), `"AI info" label hides the reel (${rBy['/reel/RRR333/'].why})`);
+  check(!rBy['/reel/RRR444/'].hidden, 'reel with no caption stays visible');
+  check(await badge(igr) === '2', `badge shows 2 (got ${await badge(igr)})`);
+
   // =============== Threshold sweep ===============
   console.log('\nThreshold sweep 1..10: hidden on each page must equal label hits + texts scoring >= t');
   const pages = [
@@ -153,6 +174,7 @@ function check(cond, msg) {
     { name: 'linkedin-2026', page: li2, post: '[componentkey^="update-card-focus"]', sel: '[data-testid="expandable-text-box"]', labels: 0 },
     { name: 'tiktok', page: tt, post: '[data-e2e="recommend-list-item-container"]', sel: '[data-e2e="video-desc"]', labels: 1 },
     { name: 'instagram', page: ig, post: 'article', sel: 'span._aacu[dir="auto"]', labels: 1 },
+    { name: 'ig-reels', page: igr, post: 'main div[aria-busy] > div:has(video)', sel: 'span.xuxw1ft', labels: 1 },
   ];
   const totalBefore = (await total()).totalHidden;
   const hiddenAtStart = {};

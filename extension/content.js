@@ -56,7 +56,8 @@
 
   function postText(post) {
     let nodes = q(post, site.text);
-    if (site.firstTextOnly && nodes.length > 1) nodes = nodes.slice(0, 1);
+    if (site.pickText && nodes.length) nodes = site.pickText(nodes, post);
+    else if (site.firstTextOnly && nodes.length > 1) nodes = nodes.slice(0, 1);
     if (nodes.length) {
       const t = nodes.map(n => n.innerText || n.textContent || '').join('\n').trim();
       return site.stripText ? t.replace(site.stripText, '').trim() : t;
@@ -67,7 +68,9 @@
   // Text in the post that is NOT the body: author line, labels, menus. Used for level 1.
   function chromeText(post) {
     const clone = post.cloneNode(true);
-    for (const n of q(clone, site.text)) n.remove();
+    let body = q(clone, site.text);
+    if (site.pickText && body.length) body = site.pickText(body, clone);
+    for (const n of body) n.remove();
     for (const sel of (site.exclude || [])) clone.querySelectorAll(sel).forEach(n => n.remove());
     return (clone.innerText || clone.textContent || '').trim();
   }

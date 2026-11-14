@@ -89,12 +89,22 @@
     instagram: {
       id: 'instagram', name: 'Instagram',
       host: /(^|\.)instagram\.com$/,
-      // Home feed and profile grids render each post as an <article>; reels use the same shell.
-      post: ['article', 'div[data-media-type]'],
+      // Home feed and profile grids render each post as an <article>.
+      // Reels (/reels/, checked live 14 Nov 2026) have no <article>: each reel is a child of a
+      // div[aria-busy] scroller holding exactly one <video>; class names are generated, so none are used.
+      post: ['article', 'div[data-media-type]', 'main div[aria-busy] > div:has(video):not(:has(article))'],
       // Live feed (verified Nov 2026): the caption is a regular-weight span._aacu[dir=auto]
       // (the bold author name is _aacw). Older/permalink layouts used an <h1>. First match only.
-      text: ['h1', 'span._aacu[dir="auto"]'],
-      firstTextOnly: true,
+      // Reels fall through to every span[dir=auto] (username, counts, audio, caption); see pickText.
+      text: ['h1', 'span._aacu[dir="auto"]', 'span[dir="auto"]'],
+      // Feed: first caption match only. Reels: the caption is the longest text span in the reel.
+      // Never fall back to the generic spans inside an <article>, where they would be comments.
+      pickText(nodes, post) {
+        if (nodes[0].matches('h1, span._aacu')) return nodes.slice(0, 1);
+        if (post.matches('article') || post.closest('article')) return [];
+        const len = n => (n.textContent || '').trim().length;
+        return [nodes.reduce((a, b) => (len(b) > len(a) ? b : a))];
+      },
       // A truncated caption ends with "… more" inside the same span; drop it before scoring.
       stripText: /\s*(\.\.\.|…)\s*more\s*$/i,
       // Comments must not count as the post's "chrome" for label matching.
