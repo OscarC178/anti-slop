@@ -1,0 +1,26 @@
+<template>
+  <style>
+    #root { position:absolute; inset:0; background:#f3f2ef; overflow:hidden; font-family: Inter, sans-serif; color:#1d1d1f; }
+    .cap { position:absolute; font-weight:900; letter-spacing:-0.02em; line-height:1.02; }
+    .chip { position:absolute; left:110px; bottom:100px; background:#1d1d1f; color:#fff; border-radius:22px; padding:26px 40px; font-weight:700; font-size:56px; letter-spacing:-0.01em; }
+    .cursor { position:absolute; left:0; top:0; }
+    
+    #xf-frame { position:absolute; left:40px; top:150px; width:1382px; height:778px; border-radius:26px; overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,.12), 0 0 0 2px rgba(0,0,0,.05); }
+    #xf-video { position:absolute; left:0; top:0; width:1382px; height:778px; object-fit:cover; }
+    #xf-a, #xf-b { left:1480px; top:380px; width:380px; font-size:76px; }
+  </style>
+  <div id="root" data-composition-id="xfold" data-width="1920" data-height="1080">
+
+    <div id="xf-frame"><video id="xf-video" class="clip" src="assets/x-fold.mp4" data-start="0" data-duration="6" data-media-start="1.2" muted playsinline></video></div>
+    <h2 id="xf-a" class="cap clip" data-start="0" data-duration="1.85">And on X.</h2>
+    <h2 id="xf-b" class="cap clip" data-start="1.85" data-duration="4.15">Threads and AI art fold too.</h2>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    tl.fromTo('#xf-frame', { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: 0.5, ease: 'power3.out' }, 0);
+    tl.fromTo('#xf-a', { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.4, ease: 'power3.out' }, 0.15);
+    tl.fromTo('#xf-b', { opacity: 0, scale: 1.06 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'expo.out' }, 1.85);
+    window.__timelines["xfold"] = tl;
+  </script>
+</template>

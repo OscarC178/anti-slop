@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en-GB"><head><meta charset="utf-8"><title>Demo X timeline</title>
+<!-- Promo demo: invented posts in a neutral X-style timeline (no platform logo or branding).
+     Uses the same markup the extension reads on x.com (article[data-testid="tweet"], tweetText,
+     cellInnerDiv), so the real extension decides what to hide. -->
+<style>
+  body { margin:0; background:#fff; font:15px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color:#0f1419; }
+  .col { width:600px; margin:0 auto; border-left:1px solid #eff3f4; border-right:1px solid #eff3f4; min-height:100vh; }
+  .top { padding:14px 16px; font-weight:800; font-size:20px; border-bottom:1px solid #eff3f4; }
+  [data-testid="cellInnerDiv"] { border-bottom:1px solid #eff3f4; }
+  article { display:flex; gap:12px; padding:12px 16px; }
+  .av { width:40px; height:40px; border-radius:50%; flex:none; }
+  .body { flex:1; min-width:0; }
+  .who b { font-weight:700; } .who span { color:#536471; }
+  [data-testid="tweetText"] { white-space:pre-wrap; margin-top:2px; }
+  .label { display:inline-block; margin-top:8px; font-size:13px; color:#536471; border:1px solid #cfd9de; border-radius:6px; padding:1px 7px; }
+  .acts { display:flex; justify-content:space-between; max-width:420px; color:#536471; font-size:13px; margin-top:10px; }
+  a.link { display:none; }
+  .antislop-placeholder { margin:8px 16px !important; }
+</style></head>
+<body><main class="col">
+<div class="top">Home</div>
+
+<div data-testid="cellInnerDiv"><article data-testid="tweet">
+  <div class="av" style="background:#f4c38b"></div>
+  <div class="body">
+    <div class="who"><b>Growth Guru</b> <span>@growthguru · 2h</span></div>
+    <div data-testid="tweetText">Most people think productivity is about doing more. It's not. It's about doing less, but better.
+
+Here's what nobody tells you:
+
+→ Your calendar is a trap
+→ Meetings are the enemy of deep work
+→ Saying no is a superpower
+
+Let that sink in. 🧵</div>
+    <div class="acts"><span>Reply 214</span><span>Repost 1.2K</span><span>Like 8.9K</span><span>Views 412K</span></div>
+    <a class="link" href="/growthguru/status/2001">link</a>
+  </div>
+</article></div>
+
+<div data-testid="cellInnerDiv"><article data-testid="tweet">
+  <div class="av" style="background:#9cc3d5"></div>
+  <div class="body">
+    <div class="who"><b>Sam Okoro</b> <span>@samokoro · 3h</span></div>
+    <div data-testid="tweetText">missed the 8:14 again. third time this week. starting to think it only exists on the timetable</div>
+    <div class="acts"><span>Reply 4</span><span>Repost 1</span><span>Like 37</span><span>Views 2.1K</span></div>
+    <a class="link" href="/samokoro/status/2002">link</a>
+  </div>
+</article></div>
+
+<div data-testid="cellInnerDiv"><article data-testid="tweet">
+  <div class="av" style="background:#c9b6e4"></div>
+  <div class="body">
+    <div class="who"><b>Dreamscapes</b> <span>@dreamscapes_art · 4h</span></div>
+    <div data-testid="tweetText">golden hour over the old harbour, which version do you prefer?</div>
+    <div class="label">Made with AI</div>
+    <div class="acts"><span>Reply 88</span><span>Repost 340</span><span>Like 5.4K</span><span>Views 96K</span></div>
+    <a class="link" href="/dreamscapes_art/status/2003">link</a>
+  </div>
+</article></div>
+
+<div data-testid="cellInnerDiv"><article data-testid="tweet">
+  <div class="av" style="background:#a9c7a4"></div>
+  <div class="body">
+    <div class="who"><b>Hannah Reid</b> <span>@hannahreid · 5h</span></div>
+    <div data-testid="tweetText">Our allotment finally produced a courgette the size of a draught excluder. Neighbours have stopped answering the door.</div>
+    <div class="acts"><span>Reply 12</span><span>Repost 9</span><span>Like 204</span><span>Views 8.7K</span></div>
+    <a class="link" href="/hannahreid/status/2004">link</a>
+  </div>
+</article></div>
+
+<div data-testid="cellInnerDiv"><article data-testid="tweet">
+  <div class="av" style="background:#e7a1a1"></div>
+  <div class="body">
+    <div class="who"><b>Founder Mindset</b> <span>@foundermindset · 6h</span></div>
+    <div data-testid="tweetText">In today's fast-paced, ever-evolving landscape, success isn't just about hustle. It's about harnessing the power of consistency to unlock your full potential.
+
+Agree? 👇</div>
+    <div class="acts"><span>Reply 96</span><span>Repost 410</span><span>Like 3.1K</span><span>Views 188K</span></div>
+    <a class="link" href="/foundermindset/status/2005">link</a>
+  </div>
+</article></div>
+
+<div data-testid="cellInnerDiv"><article data-testid="tweet">
+  <div class="av" style="background:#b3c6e8"></div>
+  <div class="body">
+    <div class="who"><b>Dev Dan</b> <span>@devdan · 7h</span></div>
+    <div data-testid="tweetText">Anyone got a Thunderbolt dock working on Asahi? Mine shows up in lsusb but the ethernet port never gets an address.</div>
+    <div class="acts"><span>Reply 23</span><span>Repost 2</span><span>Like 61</span><span>Views 4.4K</span></div>
+    <a class="link" href="/devdan/status/2006">link</a>
+  </div>
+</article></div>
+</main></body></html>

@@ -24,7 +24,7 @@ img { max-width: 100%; height: auto; }
 .btn.primary[aria-disabled="true"] { opacity: .75; cursor: default; }
 .btn.ghost { background: var(--card); color: var(--fg); box-shadow: inset 0 0 0 1px var(--line); }
 .note { font-size: 14px; color: var(--fg2); margin-top: 12px; }
-.shot { display: block; margin: 8px auto 64px; border-radius: 16px; box-shadow: 0 24px 60px rgba(0, 0, 0, .16); }
+.shot { display: block; width: 100%; height: auto; margin: 8px auto 64px; border-radius: 16px; box-shadow: 0 24px 60px rgba(0, 0, 0, .16); }
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 64px; }
 .card { background: var(--card); border-radius: 16px; padding: 22px; }
 .card h3 { margin: 0 0 6px; font-size: 18px; }

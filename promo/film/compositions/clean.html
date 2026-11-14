@@ -1,0 +1,25 @@
+<template>
+  <style>
+    #root { position:absolute; inset:0; background:#f3f2ef; overflow:hidden; font-family: Inter, sans-serif; color:#1d1d1f; }
+    .cap { position:absolute; font-weight:900; letter-spacing:-0.02em; line-height:1.02; }
+    .chip { position:absolute; left:110px; bottom:100px; background:#1d1d1f; color:#fff; border-radius:22px; padding:26px 40px; font-weight:700; font-size:56px; letter-spacing:-0.01em; }
+    .cursor { position:absolute; left:0; top:0; }
+    
+    #clean-video { position:absolute; left:0; top:0; width:1920px; height:1080px; }
+    #clean-a { bottom:200px; }
+    #clean-b { bottom:100px; background:#fff; color:#1d1d1f; font-size:44px; font-weight:600; padding:20px 34px; box-shadow:0 0 0 2px rgba(0,0,0,.08); }
+  </style>
+  <div id="root" data-composition-id="clean" data-width="1920" data-height="1080">
+
+    <video id="clean-video" class="clip" src="assets/feed-scroll.mp4" data-start="0" data-duration="6" data-media-start="0.3" muted playsinline></video>
+    <div id="clean-a" class="chip clip" data-start="0.5" data-duration="5.5">Your feed, written by people.</div>
+    <div id="clean-b" class="chip clip" data-start="2.4" data-duration="3.6">On X, LinkedIn, TikTok and Instagram</div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    tl.fromTo('#clean-a', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power3.out' }, 0.5);
+    tl.fromTo('#clean-b', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power3.out' }, 2.4);
+    window.__timelines["clean"] = tl;
+  </script>
+</template>

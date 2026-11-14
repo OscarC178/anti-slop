@@ -1,0 +1,8 @@
+# HyperFrames caches and render outputs (the published MP4 lives in docs/promo.mp4)
+.hyperframes/
+.media/
+.thumbnails/
+.transcode-cache/
+renders/
+node_modules/
+.waveform-cache/

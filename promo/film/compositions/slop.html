@@ -1,0 +1,156 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; background: #f3f2ef; overflow: hidden; font-family: Inter, sans-serif; color: #1d1d1f; }
+    #slop-stage { position: absolute; left: 0; top: 0; width: 6200px; height: 3240px; transform-origin: 0 0; }
+    .card { position: absolute; width: 1400px; min-height: 560px; background: #fff; border-radius: 28px; padding: 44px 56px 36px;
+            box-shadow: 0 0 0 2px rgba(0,0,0,.06); }
+    .card header { display: flex; gap: 22px; align-items: center; margin-bottom: 30px; }
+    .card .av { width: 84px; height: 84px; border-radius: 50%; flex: none; }
+    .card b { display: block; font-weight: 700; font-size: 38px; }
+    .card i { display: block; font-style: normal; color: #6e6e73; font-size: 30px; }
+    .ln { position: relative; font-size: 52px; line-height: 1.32; margin: 0 0 26px; }
+    .bar { position: absolute; left: -10px; right: -10px; top: 2px; bottom: 2px; background: #111; border-radius: 8px; transform-origin: 0 50%; }
+    .card footer { color: #6e6e73; font-size: 30px; border-top: 2px solid #eee; padding-top: 22px; margin-top: 10px; }
+    #slop-title { position: absolute; left: 160px; top: 330px; font-weight: 900; font-size: 170px; letter-spacing: -0.03em; line-height: 1; }
+    #slop-title em { font-style: normal; background: linear-gradient(135deg, #ff6b5e, #e5302a); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    #slop-sub { position: absolute; left: 166px; top: 560px; font-size: 56px; font-weight: 400; color: #1d1d1f; }
+    #slop-sub b { font-weight: 900; }
+  </style>
+  <div id="root" data-composition-id="slop" data-width="1920" data-height="1080">
+    <div id="slop-stage" data-layout-ignore>
+      <article class="card"  style="left:0px;top:0px">
+        <header><span class="av" style="background:#c9b6e4"></span><span><b>Mark Ellis</b><i>@markellis · 5h</i></span></header>
+        <p class="ln"><span class="bar"></span>Here's the thing nobody tells you about leadership.</p>
+        <p class="ln"><span class="bar"></span>It's not about the title. It's about the impact.</p>
+        <p class="ln"><span class="bar"></span>Read that again.</p>
+        <footer>Reply · Repost · Like · Views</footer>
+      </article>
+      <article class="card"  style="left:1600px;top:0px">
+        <header><span class="av" style="background:#f2c48d"></span><span><b>Dana Whitfield</b><i>Growth Lead · 8h</i></span></header>
+        <p class="ln"><span class="bar"></span>5 lessons I learned from failing forward:</p>
+        <p class="ln"><span class="bar"></span>→ Embrace the journey</p>
+        <p class="ln"><span class="bar"></span>→ Unlock your potential</p>
+        <p class="ln"><span class="bar"></span>Which one resonates? 👇</p>
+        <footer>Like · Comment · Repost</footer>
+      </article>
+      <article class="card"  style="left:3200px;top:0px">
+        <header><span class="av" style="background:#9fd8c4"></span><span><b>Studio Nova</b><i>@studionova · 11h</i></span></header>
+        <p class="ln"><span class="bar"></span>A testament to the ever-evolving landscape of creativity. ✨</p>
+        <p class="ln"><span class="bar"></span>The future is here.</p>
+        <footer>Reply · Repost · Like · Views</footer>
+      </article>
+      <article class="card"  style="left:4800px;top:0px">
+        <header><span class="av" style="background:#e7a1a1"></span><span><b>Leo Brandt</b><i>Coach · 14h</i></span></header>
+        <p class="ln"><span class="bar"></span>Most people won't read this.</p>
+        <p class="ln"><span class="bar"></span>But the ones who do will change everything.</p>
+        <p class="ln"><span class="bar"></span>Let that sink in.</p>
+        <footer>Like · Comment · Repost</footer>
+      </article>
+      <article class="card"  style="left:0px;top:840px">
+        <header><span class="av" style="background:#a9c7a4"></span><span><b>Ruth Adeyemi</b><i>@ruthadeyemi · 17h</i></span></header>
+        <p class="ln"><span class="bar"></span>It's not about working harder.</p>
+        <p class="ln"><span class="bar"></span>It's about working smarter.</p>
+        <p class="ln"><span class="bar"></span>Game-changer. 🚀</p>
+        <footer>Reply · Repost · Like · Views</footer>
+      </article>
+      <article class="card hook" id="slop-hook" style="left:1600px;top:840px">
+        <header><span class="av" style="background:#8fb8de"></span><span><b>Priya Lal</b><i>Head of Operations · 3h</i></span></header>
+        <p class="ln h0"><span class="bar"></span>I'm thrilled to announce that I've joined a new team.</p>
+        <p class="ln h1"><span class="bar"></span>It's not just a job. It's a calling.</p>
+        <p class="ln h2"><span class="bar"></span>In today's fast-paced, ever-evolving landscape, I'm excited to leverage my passion.</p>
+        <p class="ln h3"><span class="bar"></span>Let that sink in. 🚀</p>
+        <p class="ln h4"><span class="bar"></span>Agree? 👇</p>
+        <footer>Like · Comment · Repost</footer>
+      </article>
+      <article class="card"  style="left:3200px;top:840px">
+        <header><span class="av" style="background:#b3c6e8"></span><span><b>Kai Morgan</b><i>CEO · 20h</i></span></header>
+        <p class="ln"><span class="bar"></span>I asked AI to describe my morning routine.</p>
+        <p class="ln"><span class="bar"></span>The result? Absolutely mind-blowing. 🤯</p>
+        <p class="ln"><span class="bar"></span>Agree?</p>
+        <footer>Like · Comment · Repost</footer>
+      </article>
+      <article class="card"  style="left:4800px;top:840px">
+        <header><span class="av" style="background:#f0b7c9"></span><span><b>Ines Varga</b><i>@inesvarga · 3h</i></span></header>
+        <p class="ln"><span class="bar"></span>In a world of noise, be the signal.</p>
+        <p class="ln"><span class="bar"></span>Delve deeper. Foster connection.</p>
+        <p class="ln"><span class="bar"></span>Thoughts? 💭</p>
+        <footer>Reply · Repost · Like · Views</footer>
+      </article>
+      <article class="card"  style="left:0px;top:1680px">
+        <header><span class="av" style="background:#d6c39a"></span><span><b>Tom Ashby</b><i>Investor · 6h</i></span></header>
+        <p class="ln"><span class="bar"></span>Here's why this matters more than ever:</p>
+        <p class="ln"><span class="bar"></span>The landscape is shifting.</p>
+        <p class="ln"><span class="bar"></span>Are you ready? 👇</p>
+        <footer>Like · Comment · Repost</footer>
+      </article>
+      <article class="card"  style="left:1600px;top:1680px">
+        <header><span class="av" style="background:#9cc3d5"></span><span><b>Nadia Faris</b><i>@nadiafaris · 9h</i></span></header>
+        <p class="ln"><span class="bar"></span>I'm humbled and honoured to share some exciting news.</p>
+        <p class="ln"><span class="bar"></span>Grateful for the journey. 🙏</p>
+        <footer>Reply · Repost · Like · Views</footer>
+      </article>
+      <article class="card"  style="left:3200px;top:1680px">
+        <header><span class="av" style="background:#c4d79b"></span><span><b>Sam Ortiz</b><i>Founder · 12h</i></span></header>
+        <p class="ln"><span class="bar"></span>Unpopular opinion:</p>
+        <p class="ln"><span class="bar"></span>Consistency beats talent.</p>
+        <p class="ln"><span class="bar"></span>Every. Single. Time.</p>
+        <footer>Like · Comment · Repost</footer>
+      </article>
+      <article class="card"  style="left:4800px;top:1680px">
+        <header><span class="av" style="background:#e2b4f0"></span><span><b>Elle Park</b><i>@ellepark · 15h</i></span></header>
+        <p class="ln"><span class="bar"></span>Stop scrolling.</p>
+        <p class="ln"><span class="bar"></span>This is your sign to start.</p>
+        <p class="ln"><span class="bar"></span>Repost ♻️ if you agree.</p>
+        <footer>Reply · Repost · Like · Views</footer>
+      </article>
+      <article class="card"  style="left:0px;top:2520px">
+        <header><span class="av" style="background:#a6b8c8"></span><span><b>James Kerr</b><i>Sales Director · 18h</i></span></header>
+        <p class="ln"><span class="bar"></span>It's not just a product. It's a movement.</p>
+        <p class="ln"><span class="bar"></span>Let that sink in. 🚀</p>
+        <footer>Like · Comment · Repost</footer>
+      </article>
+      <article class="card"  style="left:1600px;top:2520px">
+        <header><span class="av" style="background:#f3c7a0"></span><span><b>Maya Chen</b><i>@mayachen · 21h</i></span></header>
+        <p class="ln"><span class="bar"></span>Navigating the complexities of modern work.</p>
+        <p class="ln"><span class="bar"></span>Seamless. Scalable. Synergy.</p>
+        <p class="ln"><span class="bar"></span>Agree? 👇</p>
+        <footer>Reply · Repost · Like · Views</footer>
+      </article>
+      <article class="card"  style="left:3200px;top:2520px">
+        <header><span class="av" style="background:#b9e0c9"></span><span><b>Owen Price</b><i>Speaker · 4h</i></span></header>
+        <p class="ln"><span class="bar"></span>Your network is your net worth.</p>
+        <p class="ln"><span class="bar"></span>Read that twice.</p>
+        <footer>Like · Comment · Repost</footer>
+      </article>
+      <article class="card"  style="left:4800px;top:2520px">
+        <header><span class="av" style="background:#d9b3a3"></span><span><b>Zara Hussain</b><i>@zarahussain · 7h</i></span></header>
+        <p class="ln"><span class="bar"></span>I used to think success was about hustle.</p>
+        <p class="ln"><span class="bar"></span>I was wrong.</p>
+        <p class="ln"><span class="bar"></span>Here’s what I learned 🧵</p>
+        <footer>Reply · Repost · Like · Views</footer>
+      </article>
+    </div>
+    <h1 id="slop-title" class="clip" data-start="10.9" data-duration="3.1">Slop is <em>slop.</em></h1>
+    <p id="slop-sub" class="clip" data-start="11.6" data-duration="2.4"><b>Anti-Slop</b> folds it out of your feed.</p>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const S = '#slop-stage';
+    // Hook: the hook card fills the frame; its first line is there on frame 0, the rest arrive.
+    tl.fromTo(S, { x: -1440, y: -730, scale: 1 }, { x: -1440, y: -730, scale: 1, duration: 0.01 }, 0);
+    tl.fromTo('.card:not(.hook)', { opacity: 1 }, { opacity: 1, duration: 0.01 }, 0);
+    tl.fromTo('#slop-hook .ln:not(.h0)', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.25, ease: 'power3.out', stagger: 0.7 }, 0.5);
+    // Tension: pull back to the wall of slop, then the wall drifts up like a feed.
+    tl.fromTo(S, { x: -1440, y: -730, scale: 1 },
+      { x: 19, y: 88, scale: 0.3035, duration: 1.6, ease: 'power2.inOut' }, 3.8);
+    tl.fromTo(S, { y: 88 }, { y: -12, duration: 3.6, ease: 'none' }, 5.4);
+    // Reveal: black bars slam over every slop line.
+    tl.fromTo('.bar', { scaleX: 0 }, { scaleX: 1, duration: 0.18, ease: 'expo.out', stagger: { each: 0.022, from: 'center' } }, 9.0);
+    // Push in a little, then the wall gives way to the grey ground for the line.
+    tl.fromTo(S, { scale: 0.3035 }, { scale: 0.3794, duration: 1.8, ease: 'power2.in' }, 9.0);
+    tl.fromTo(S, { opacity: 1 }, { opacity: 0, duration: 0.3, ease: 'power1.in' }, 10.6);
+    tl.fromTo('#slop-title', { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 0.35, ease: 'expo.out' }, 10.9);
+    tl.fromTo('#slop-sub', { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.45, ease: 'power3.out' }, 11.6);
+    window.__timelines["slop"] = tl;
+  </script>
+</template>
