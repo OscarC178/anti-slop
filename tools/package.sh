@@ -31,6 +31,11 @@ for (const [s, f] of Object.entries(m.icons)) {
   if (w != s || h != s) throw new Error(f + ' is ' + w + 'x' + h);
 }
 if (m.description.length > 132) throw new Error('manifest description over 132 characters');
+// The store listing icon is uploaded separately from the zip. They must be the same picture,
+// or the listing shows one logo and the installed extension another (this happened with 0.2.0).
+const same = (a, b) => fs.readFileSync(a).equals(fs.readFileSync(b));
+if (!same('extension/icons/128.png', 'store/assets/icon-128.png')) throw new Error('store/assets/icon-128.png differs from extension/icons/128.png: run node tools/make-icons.js');
+if (!fs.existsSync('extension/icons/icon.svg')) throw new Error('extension/icons/icon.svg is missing: run node tools/make-icons.js');
 console.log('Manifest OK:', m.name, m.version, '·', m.permissions.join(', '));
 "
 

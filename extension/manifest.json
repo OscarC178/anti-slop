@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Anti-Slop: hide AI slop from your feed",
   "short_name": "Anti-Slop",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Hides AI-labelled and AI-sounding posts on X, LinkedIn, TikTok and Instagram. Runs on your device, no AI calls.",
   "permissions": ["storage", "webNavigation", "alarms"],
   "host_permissions": [],

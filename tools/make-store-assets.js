@@ -1,5 +1,5 @@
 // Builds the Chrome Web Store assets from the real extension, with no extra dependencies:
-//   extension/icons/{16,48,128}.png   toolbar + store icon (128 has the 16 px transparent margin Google asks for)
+//   the icon in every size and place (drawn in tools/make-icons.js)
 //   store/assets/screenshot-{1..5}.png  1280x800
 //   store/assets/promo-small.png 440x280, promo-marquee.png 1400x560
 // Run: node tools/make-store-assets.js
@@ -7,24 +7,14 @@
 const path = require('path');
 const fs = require('fs');
 
-const PW_ROOT = path.join(process.env.HOME, '.local/share/mise/installs/npm-playwright-cli/latest/node_modules/.mise');
-const pwDir = fs.readdirSync(PW_ROOT).find(d => /^playwright@/.test(d));
-const { chromium } = require(path.join(PW_ROOT, pwDir, 'node_modules', 'playwright'));
+const { iconSvg, writeIcons, loadChromium } = require('./make-icons.js');   // the one icon drawing
+const chromium = loadChromium();
 
 const ROOT = path.resolve(__dirname, '..');
 const EXT = path.join(ROOT, 'extension');
 const OUT = path.join(ROOT, 'store', 'assets');
 fs.mkdirSync(OUT, { recursive: true });
 
-// Same mark as the popup header: a filter funnel catching two AI sparkles.
-const MARK = '<path d="M6.5 2C7.16 4.34 7.16 4.34 9.5 5C7.16 5.66 7.16 5.66 6.5 8C5.84 5.66 5.84 5.66 3.5 5C5.84 4.34 5.84 4.34 6.5 2Z" fill="#fff"/><path d="M15.5 1.7999999999999998C15.984 3.516 15.984 3.516 17.7 4C15.984 4.484 15.984 4.484 15.5 6.2C15.016 4.484 15.016 4.484 13.3 4C15.016 3.516 15.016 3.516 15.5 1.7999999999999998Z" fill="#fff"/><path d="M3 10h18l-7 7v4.5l-4-2V17z" fill="#fff" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/>';
-function iconSvg(size, art) {
-  const pad = (size - art) / 2, r = art * 0.225;
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
-    <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff6b5e"/><stop offset="1" stop-color="#e5302a"/></linearGradient></defs>
-    <rect x="${pad}" y="${pad}" width="${art}" height="${art}" rx="${r}" fill="url(#g)"/>
-    <g transform="translate(${pad + art * 0.14} ${pad + art * 0.14}) scale(${art * 0.72 / 24})">${MARK}</g></svg>`;
-}
 const b64 = (file) => 'data:image/png;base64,' + fs.readFileSync(file).toString('base64');
 
 const FONT = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
@@ -46,13 +36,7 @@ function slide({ title, sub, imgs, bg = 'linear-gradient(140deg,#fff5f4 0%,#f2f2
   const browser = await chromium.launch({ executablePath: '/usr/bin/chromium', headless: true });
 
   // ---- icons ----
-  const ip = await browser.newPage();
-  for (const [size, art] of [[16, 16], [48, 48], [128, 96]]) {
-    await ip.setViewportSize({ width: size, height: size });
-    await ip.setContent(`<html><body style="margin:0;background:transparent">${iconSvg(size, art)}</body></html>`);
-    await ip.screenshot({ path: path.join(EXT, 'icons', size + '.png'), omitBackground: true, clip: { x: 0, y: 0, width: size, height: size } });
-  }
-  fs.copyFileSync(path.join(EXT, 'icons', '128.png'), path.join(OUT, 'icon-128.png'));
+  await writeIcons(browser);   // icon.svg, 16/48/128 PNGs, store and site copies
   await browser.close();
 
   // ---- real extension: demo feed + popup states ----
@@ -155,8 +139,7 @@ function slide({ title, sub, imgs, bg = 'linear-gradient(140deg,#fff5f4 0%,#f2f2
       background:linear-gradient(135deg,#ff6b5e 0%,#e5302a 100%);color:#fff}
     .name{font-size:${big ? 88 : 40}px;font-weight:800;letter-spacing:-.03em;line-height:1}
     .tag{font-size:${big ? 34 : 17}px;opacity:.92;margin-top:${big ? 14 : 8}px;font-weight:500}
-    svg rect{fill:rgba(255,255,255,.18)}
-  </style></head><body>${iconSvg(big ? 220 : 96, big ? 220 : 96)}<div><div class="name">Anti-Slop</div><div class="tag">Hide AI slop from your feed</div></div></body></html>`;
+  </style></head><body>${iconSvg(big ? 220 : 96, big ? 220 : 96, { plain: true })}<div><div class="name">Anti-Slop</div><div class="tag">Hide AI slop from your feed</div></div></body></html>`;
   await render('promo-small.png', promo(440, 280, false), 440, 280);
   await render('promo-marquee.png', promo(1400, 560, true), 1400, 560);
   await page.context().browser().close();

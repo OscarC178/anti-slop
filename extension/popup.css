@@ -21,7 +21,7 @@
   --radius: 14px;
   --ease: cubic-bezier(.2, .8, .2, 1);
   --emph: cubic-bezier(0.2, 0, 0, 1);          /* "emphasized" curve: segmented thumb, sheet moves */
-  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);  /* light overshoot: chips, knobs */
+  --spring: cubic-bezier(0.32, 0.72, 0, 1);     /* settles like a critically damped spring: no overshoot */
   --t: 260ms;
   color-scheme: light dark;
   interpolate-size: allow-keywords;             /* lets <details> animate to height:auto */
@@ -39,10 +39,6 @@
     --brand-x: #e5e5ea;
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  :root { --t: 0ms; }
-  * { animation: none !important; transition: none !important; }
-}
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html, body { margin: 0; }
@@ -52,25 +48,31 @@ body {
   overflow: hidden;
   background: var(--bg);
   color: var(--fg);
-  font: 14px/1.4 -apple-system, "SF Pro Text", "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  letter-spacing: -0.01em;
+  font: 14px/1.4 -apple-system, system-ui, "SF Pro Text", "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 .app { max-height: 600px; overflow-y: auto; overscroll-behavior: contain; padding: 0 0 16px; }
 .app::-webkit-scrollbar { width: 0; }
 
 /* ---------- header ---------- */
-.top { display: flex; align-items: center; justify-content: space-between; padding: 16px 16px 6px; }
-.brand { display: flex; align-items: center; gap: 10px; }
-.app-icon {
-  width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; color: #fff;
-  background: linear-gradient(145deg, #ff6b5e, #ff3b30);
-  box-shadow: 0 4px 12px rgba(255, 59, 48, 0.28);
+.top {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between; padding: 14px 16px 10px;
+  background: color-mix(in srgb, var(--bg) 70%, transparent);
+  -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%);
 }
+/* Scroll edge: the hairline only appears once content is actually under the bar. */
+.top::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--line); opacity: 0;
+  animation: edge linear both; animation-timeline: scroll(nearest); animation-range: 0 20px;
+}
+@keyframes edge { to { opacity: 1; } }
+.brand { display: flex; align-items: center; gap: 10px; }
+.app-icon { display: block; width: 36px; height: 36px; filter: drop-shadow(0 3px 6px rgba(255, 59, 48, 0.26)); }
 .title { font-size: 17px; font-weight: 700; letter-spacing: -0.02em; }
 .subtitle { font-size: 12px; color: var(--fg2); margin-top: 1px; }
 
 /* ---------- hero counter ---------- */
-.hero { text-align: center; padding: 10px 16px 14px; }
+.hero { text-align: center; padding: 6px 16px 14px; }
 .hero-num {
   font-size: 56px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; color: var(--fg);
   font-variant-numeric: tabular-nums;
@@ -107,7 +109,9 @@ body {
 .views { position: relative; padding: 0 16px; }
 .view { animation: slide-in var(--t) var(--ease); }
 .view[hidden] { display: none; }
-@keyframes slide-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+#view-filter { --from: -14px; }   /* Filter is the left tab, Scorecard the right */
+#view-score { --from: 14px; }
+@keyframes slide-in { from { opacity: 0; transform: translateX(var(--from, 0)); } to { opacity: 1; transform: none; } }
 
 /* ---------- cards & rows ---------- */
 .card {
@@ -191,15 +195,19 @@ input[type=range]:focus-visible { outline: 2px solid var(--blue); outline-offset
 .mini-seg { display: flex; padding: 2px; border-radius: 8px; background: var(--fill); flex: none; }
 .mini-seg button {
   border: 0; background: transparent; color: var(--fg2); font: inherit; font-size: 12px; font-weight: 600;
-  padding: 5px 10px; border-radius: 6px; cursor: pointer; transition: all var(--t) var(--ease);
+  padding: 5px 10px; border-radius: 6px; cursor: pointer;
+  transition: background var(--t) var(--ease), color var(--t) var(--ease), box-shadow var(--t) var(--ease), transform 100ms ease-out;
 }
+.mini-seg button:active { transform: scale(0.96); }
 .mini-seg button.active { background: var(--card); color: var(--fg); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12); }
 .pills { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
 .pill input { position: absolute; opacity: 0; width: 0; height: 0; }
 .pill span {
   display: inline-block; padding: 5px 11px; border-radius: 999px; font-size: 12px; font-weight: 600;
-  background: var(--fill); color: var(--fg2); cursor: pointer; transition: all var(--t) var(--ease);
+  background: var(--fill); color: var(--fg2); cursor: pointer;
+  transition: background var(--t) var(--ease), color var(--t) var(--ease), transform 100ms ease-out;
 }
+.pill:active span { transform: scale(0.95); }
 .pill input:checked + span { background: var(--blue); color: #fff; }
 .pill input:focus-visible + span { outline: 2px solid var(--blue); outline-offset: 2px; }
 
@@ -223,7 +231,10 @@ input[type=range]:focus-visible { outline: 2px solid var(--blue); outline-offset
 .kw button {
   width: 18px; height: 18px; border: 0; border-radius: 50%; background: var(--fg3); color: var(--card);
   font-size: 13px; line-height: 1; cursor: pointer; display: grid; place-items: center;
+  position: relative; transition: transform 100ms ease-out;
 }
+.kw button:active { transform: scale(0.88); }
+.kw button::after, .review-x::after { content: ""; position: absolute; inset: -8px; }   /* larger hit area than the visible dot */
 .kw.out { animation: pop-out 180ms var(--ease) forwards; }
 @keyframes pop { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: none; } }
 @keyframes pop-out { to { opacity: 0; transform: scale(0.8); } }
@@ -283,22 +294,24 @@ a:hover { text-decoration: underline; }
 .btn {
   font: inherit; font-size: 14px; font-weight: 600; border: 0; border-radius: 10px; padding: 9px 14px;
   background: var(--fill); color: var(--blue); cursor: pointer;
-  transition: transform 160ms var(--spring), filter 160ms var(--ease);
+  transition: transform 100ms ease-out, filter 100ms ease-out;
 }
-.btn:active { transform: scale(0.96); }
+.btn:active { transform: scale(0.97); filter: brightness(0.94); }
 .btn.primary { background: var(--blue); color: #fff; }
 .btn.wide { width: 100%; padding: 12px; font-size: 15px; }
 .btn:focus-visible, .review-x:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 
 /* ---------- review reminder (inline card, never a pop-over) ---------- */
 .review { position: relative; margin: 0 16px 12px; padding: 14px 16px; animation: rise 320ms var(--emph); }
-.review.out { opacity: 0; transform: translateY(-4px) scale(0.98); transition: opacity 180ms var(--ease), transform 180ms var(--ease); }
+.review.out { opacity: 0; transform: translateY(6px); transition: opacity 180ms var(--ease), transform 180ms var(--ease); }
 .review-title { font-weight: 600; font-size: 15px; margin: 0 24px 4px 0; }
 .review-actions { display: flex; gap: 8px; margin-top: 12px; }
 .review-x {
   position: absolute; top: 8px; right: 8px; width: 26px; height: 26px; border-radius: 50%; border: 0;
   background: var(--fill); color: var(--fg2); font-size: 16px; line-height: 1; cursor: pointer;
+  transition: transform 100ms ease-out;
 }
+.review-x:active { transform: scale(0.9); }
 @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
 /* ---------- first-run notice: bottom sheet ---------- */
@@ -310,11 +323,14 @@ a:hover { text-decoration: underline; }
 .sheet {
   width: 100%; max-height: 100%; overflow-y: auto; box-sizing: border-box;
   background: var(--bg); color: var(--fg); border-radius: 16px 16px 0 0; padding: 8px 18px 16px;
+  box-shadow: 0 -10px 32px rgba(0, 0, 0, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.5);
   transform: translateY(100%); transition: transform 300ms var(--emph);
 }
+.app { transform-origin: 50% 0; transition: transform 300ms var(--emph); }
+body:has(.sheet-backdrop.open) .app { transform: scale(0.97); }
 .sheet-backdrop.open .sheet { transform: none; }
 .sheet-grabber { width: 36px; height: 5px; border-radius: 3px; background: var(--fg3); margin: 0 auto 10px; opacity: .6; }
-.sheet h2 { font-size: 20px; margin: 4px 0 8px; letter-spacing: -0.01em; }
+.sheet h2 { font-size: 20px; line-height: 1.2; margin: 4px 0 8px; letter-spacing: -0.02em; }
 .sheet p { margin: 0 0 12px; font-size: 14px; line-height: 1.45; }
 .sheet .why { color: var(--fg2); font-size: 13px; }
 .example, .never { background: var(--card); border-radius: 12px; padding: 10px 12px; margin-bottom: 10px; }
@@ -328,7 +344,36 @@ a:hover { text-decoration: underline; }
 }
 .optout input { width: 20px; height: 20px; accent-color: var(--blue); margin: 0; }
 .sheet-foot { text-align: center; font-size: 12px; color: var(--fg2); margin-top: 10px; }
+
+/* ---------- tracking by size: tighter as text grows, a touch looser when small ---------- */
+.row-title, .review-title, .optout, .btn, .sheet p { letter-spacing: -0.01em; }
+.subtitle, .row-sub, .chip, .scale, .stat-label, .footnote, .day .lbl, .day .num, .sheet-foot { letter-spacing: 0.01em; }
+
+/* ---------- accessibility settings ---------- */
+/* Reduced motion: keep the colour and opacity fades that explain what changed; drop movement and scaling. */
 @media (prefers-reduced-motion: reduce) {
-  .sheet, .sheet-backdrop, .review, .review.out { transition: none; animation: none; }
+  .view, .review, .kw { animation: fade 200ms ease both; }
+  .kw.out { animation: fade-out 150ms ease forwards; }
+  .hero-num.bump { animation: none; }
+  .review.out { transform: none; }
+  .seg-thumb, .switch .knob::after, .chev, .bar .fill, .day .col, .group::details-content { transition-duration: 0.01ms; }
+  .sheet { transform: none; opacity: 0; transition: opacity 200ms ease; }
+  .sheet-backdrop.open .sheet { opacity: 1; }
+  .app, body:has(.sheet-backdrop.open) .app { transform: none; transition: none; }
+  :active, .pill:active span { transform: none !important; }
+}
+@keyframes fade { from { opacity: 0; } }
+@keyframes fade-out { to { opacity: 0; } }
+/* Reduced transparency or more contrast: the header becomes a solid bar. */
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .top { background: var(--bg); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+@media (prefers-contrast: more) {
+  :root { --fg2: #3a3a3c; --fg3: #636366; --line: rgba(60, 60, 67, 0.5); }
+  .card, .stats, .example, .never, .optout { box-shadow: inset 0 0 0 1px var(--fg3); }
+  .top::after { opacity: 1; animation: none; }
+}
+@media (prefers-contrast: more) and (prefers-color-scheme: dark) {
+  :root { --fg2: #d1d1d6; --fg3: #aeaeb2; --line: rgba(235, 235, 245, 0.5); }
 }
 .sheet-backdrop[hidden], .review[hidden] { display: none; }
