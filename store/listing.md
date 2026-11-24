@@ -1,4 +1,4 @@
-# Chrome Web Store listing — Anti-Slop 0.2.0
+# Chrome Web Store listing — Anti-Slop 0.3.0
 
 Copy-ready text for each field in the Developer Dashboard. UK English.
 Sources for the rules are at the bottom.

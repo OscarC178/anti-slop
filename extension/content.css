@@ -56,7 +56,14 @@
   font: inherit;
   font-size: 12px;
   cursor: pointer;
+  transition: transform 100ms ease-out, background 150ms ease;
 }
+
+.antislop-show:active {
+  transform: scale(0.96);
+  background: rgba(128, 128, 128, 0.28);
+}
+@media (prefers-reduced-motion: reduce) { .antislop-show:active { transform: none; } }
 
 .antislop-show:hover {
   background: rgba(128, 128, 128, 0.18);

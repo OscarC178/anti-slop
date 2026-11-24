@@ -245,7 +245,7 @@ function closeNotice() {
   $('telemetry').checked = settings.telemetry;
   chrome.storage.local.set({ noticeSeen: true });
   $('notice').classList.remove('open');
-  setTimeout(() => { $('notice').hidden = true; maybeShowReview(); }, 220);
+  setTimeout(() => { $('notice').hidden = true; maybeShowReview(); }, 300);   // matches the sheet's 300 ms slide
 }
 
 // ---------- review reminder ----------

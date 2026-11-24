@@ -30,7 +30,7 @@ spent on feed tabs and a last-7-days chart. History is kept on this device (last
 2. Turn on **Developer mode** (top right).
 3. Click **Load unpacked** and choose this folder:
    `/home/oscar/Work/anti-slop/extension`
-4. Open x.com, linkedin.com or tiktok.com. The broom icon in the toolbar shows the count.
+4. Open x.com, linkedin.com or tiktok.com. The red funnel icon in the toolbar shows the count.
 
 After any change to the code, go back to `chrome://extensions` and click the reload arrow on the
 Anti-Slop card.
@@ -65,6 +65,7 @@ manipulating ratings.
 
 - `store/listing.md`: copy-ready text for every Chrome Web Store dashboard field, permission
   justifications and data-use answers.
+- `node tools/make-icons.js`: redraws the icon everywhere it is used (popup, toolbar, store, site)
 - `node tools/make-store-assets.js`: rebuilds the icons, five 1280×800 screenshots and two promo tiles
   from the real extension running on an invented demo feed (`store/demo-feed.html`).
 - `tools/package.sh`: runs the tests and builds `dist/anti-slop-<version>.zip`. It refuses to build
